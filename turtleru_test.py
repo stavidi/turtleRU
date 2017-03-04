@@ -147,8 +147,37 @@ def test_degrees_radians() :
     вРадианы()
     assert math.abs(курс() - math.pi/2) < 0.0001
     
-       
+def test_pen() :
+    стереть()
     
+    assert 1 == толщина()
+    толщина(3)
+    assert 3 == толщина()
+    
+    пероВниз()
+    assert True == опущено()
+    вперед(100)
+    
+    пероВверх()
+    assert False == опущено()
+    вперед(50)
+    
+    пероВниз()
+    assert True == опущено()
+    вперед(100)
+    
+    встатьНа(250, 10)
+    лево(90)
+    
+    перо(fillcolor="black", pencolor="red", pensize=10)
+    p = перо()
+    assert 10 == толщина()
+    assert 'red' == цветПера()
+    assert 'black' == цветЗакраски()
+    
+    будемКрасить()
+    sq(100)
+    заКрасили()
     
     
 def test() :
@@ -157,8 +186,9 @@ def test() :
     # test0()
     # test_color()  
     # test_visibility()
-    test_xy()
-    test_head()
+    # test_xy()
+    # test_head()
+    test_pen()
 
     конец()
     

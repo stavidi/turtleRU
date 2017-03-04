@@ -121,6 +121,25 @@ class Черепаха (turtle.Turtle) :
     def вРадианы(self):
         self.radians()
         
+    # Pen control
+    def пероВниз(self):
+        self.down()
+        
+    def пероВверх(self):
+        self.up()
+        
+    def опущено(self):
+        return self.isdown()
+        
+    def размерПера(self, width=None):
+        return self.width(width)
+
+    def толщина(self, width=None):
+        return self.width(width)
+        
+    def перо(self, pen=None, **pendict) :
+        return self.pen(pen, **pendict)
+        
 t = Черепаха()
 
 def начало(**kwargs) :
@@ -162,6 +181,13 @@ def конец() :
 
 вГрадусы = t.вГрадусы
 вРадианы = t.вРадианы
+
+пероВниз = t.пероВниз
+пероВверх = t.пероВверх
+опущено = t.опущено
+размерПера = t.размерПера
+толщина = t.толщина
+перо = t.перо
 
 
 if __name__ == '__main__':
