@@ -62,7 +62,7 @@ class Черепаха (turtle.Turtle) :
     def видно(self):
         return t.isvisible()
         
-        
+    # Motion    
     def вперед(self, n) :
         self.forward(n)
 
@@ -74,7 +74,52 @@ class Черепаха (turtle.Turtle) :
         
     def право(self, n):
         self.right(n)
+    
+    def встатьНа(self, *args):
+        self.goto(*args)
         
+    def Х(self, x):
+        self.setx(x)
+        
+    def У(self, y):
+        self.sety(y)
+        
+    def курс(self, angle):
+        self.seth(angle)
+    
+    def домой(self):
+        self.home()
+        
+    # Turtle state
+    def где(self):
+        return self.position();
+        
+    def мойХ(self):
+        return self.xcor();
+        
+    def мойУ(self):
+        return self.ycor();
+        
+    def мойКурс(self):
+        return self.heading();
+    def куда(self):
+        return self.heading();
+        
+    def угол(self, x, y=None):
+        return self.towards(x,y)
+        
+    def расстояние(self, x, y=None):
+        return self.distance(x,y)
+    
+    def длина(self, x, y=None):
+        return self.distance(x,y)
+        
+    # Settings for measurement
+    def вГрадусы(self, fullcircle=360.0):
+        self.degrees(fullcircle)
+        
+    def вРадианы(self):
+        self.radians()
         
 t = Черепаха()
 
@@ -99,7 +144,26 @@ def конец() :
 назад = t.назад
 лево = t.лево
 право = t.право
-    
+
+встатьНа = t.встатьНа
+Х = t.Х
+У = t.У
+курс = t.курс
+домой = t.домой
+
+где = t.где
+мойХ = t.мойХ
+мойУ = t.мойУ
+мойКурс = t.мойКурс
+куда = t.куда
+угол = t.угол
+расстояние = t.расстояние
+длина = t.длина
+
+вГрадусы = t.вГрадусы
+вРадианы = t.вРадианы
+
+
 if __name__ == '__main__':
     начало()
     вперед(75)

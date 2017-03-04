@@ -2,6 +2,7 @@
 # чтобы можно было писать русские буквы и иероглифы
 
 from turtleru import *
+import math
 
 TIC = 3 # small pause in sec
 TAC = 5 # big pause in sec
@@ -77,6 +78,78 @@ def test_visibility() :
     жди(TIC)
     покажись()
     assert True == видно()
+
+def test_xy():
+    стереть()
+    assert 0 == мойХ()
+    assert 0 == мойУ()
+    assert (0,0) == где()
+    
+    встатьНа(100, 50)
+    assert 100 == мойХ()
+    assert 50 == мойУ()
+    assert (100,50) == где()
+    
+    Х(120)
+    assert (120,50) == где()
+    
+    У(-20)
+    assert (120,-20) == где()
+
+def test_head():
+    стереть()
+    assert 0 == куда()
+    assert 0 == угол(100,0)
+    курс(90)
+    assert 90 == куда()
+    assert 0 == угол(100,0)
+    
+    встатьНа(70, 100)
+    домой()
+    assert 0 == куда()
+    assert (0,0) == где()
+
+    assert 0 == угол(100,0)
+    assert 90 == угол(0,100)
+    assert 315 == угол(100,-100)
+
+    курс(45)
+    assert 0 == угол(100,0)
+    assert 90 == угол(0,100)
+    assert 315 == угол(100,-100)
+    
+    встатьНа(50, 100)
+    assert 0 == угол(100,100)
+    assert 180 == угол(0,100)
+    assert 270 == угол(50,-100)
+
+    встатьНа(50, 100)
+    assert 0 == расстояние(50, 100)
+    assert 200 == расстояние(50, -100)
+    assert 100 == расстояние(150, 100)
+   
+    assert 0 == длина(50, 100)
+    assert 200 == длина(50, -100)
+    assert 100 == длина(150, 100)
+    
+def test_degrees_radians() :
+    стереть()
+    домой()
+    лево(90)
+    assert 90 == курс()
+    
+    вГрадусы(400)
+    assert 100 == курс()
+    
+    вГрадусы(360)
+    assert 90 == курс()
+    
+    вРадианы()
+    assert math.abs(курс() - math.pi/2) < 0.0001
+    
+       
+    
+    
     
 def test() :
     начало()
@@ -84,6 +157,8 @@ def test() :
     # test0()
     # test_color()  
     # test_visibility()
+    test_xy()
+    test_head()
 
     конец()
     
