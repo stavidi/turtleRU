@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 # чтобы можно было писать русские буквы и иероглифы
 
+from time import sleep
+import threading
+
 import turtle
 
 RU_COLOR = {
@@ -13,10 +16,53 @@ RU_COLOR = {
   "рыжий": "orange"
 }
 
+screen = turtle.Screen()
+
+# animation control
+def жди(sec):
+    sleep(sec)
+
+# drawing control
+def стереть(**kwargs):
+    screen.reset(**kwargs)
+    
+def всеУбрать(**kwargs):
+    screen.reset(**kwargs)  
+    
 class Черепаха (turtle.Turtle) :
     def __init__(self,**kwargs):
        super(Черепаха, self).__init__(**kwargs)
-
+        
+    # Color control
+    def цвет(self, *colors) :
+        return t.color(*list(RU_COLOR.get(c, c) for c in colors ))
+        
+    def цветПера(self, *colors) :
+        return t.pencolor(*list(RU_COLOR.get(c, c) for c in colors ))
+        
+    def цветЗакраски(self, *colors) :
+        return t.fillcolor(*list(RU_COLOR.get(c, c) for c in colors ))
+        
+    def будемКрасить(self):
+        t.begin_fill()
+        
+    def заКрасили(self):
+        t.end_fill()
+        
+    def красить(self):
+        return t.filling()
+        
+    # Visibility
+    def покажись(self):
+        t.showturtle()
+        
+    def спрячь(self):
+        t.hideturtle()
+        
+    def видно(self):
+        return t.isvisible()
+        
+        
     def вперед(self, n) :
         self.forward(n)
 
@@ -29,8 +75,6 @@ class Черепаха (turtle.Turtle) :
     def право(self, n):
         self.right(n)
         
-    def цветПера(self, color) :
-        t.pencolor(RU_COLOR[color])
         
 t = Черепаха()
 
@@ -39,36 +83,24 @@ def начало(**kwargs) :
         
 def конец() :
     turtle.mainloop()     # чтобы окно не закрывалось, на repl.it не нужно
+
+цвет = t.цвет
+цветПера = t.цветПера
+цветЗакраски = t.цветЗакраски
+будемКрасить = t.будемКрасить
+заКрасили = t.заКрасили
+красить = t.красить
+
+покажись = t.покажись
+спрячь = t.спрячь
+видно = t.видно
     
 вперед = t.вперед
 назад = t.назад
 лево = t.лево
 право = t.право
-цветПера = t.цветПера
-    
-def test_oop() :
-    ч = Черепаха()   # сделали черепаху, назвали черепаху t
-    # ч.вид("черепаха")     # как черепаха выглядит
-
-    ч.вперед(75)         # вперед 75
-    ч.лево(90)            # поворот налево на 90 градусов
-    # ч.цветлинии('синий')    # рисовать линии синим цветом
-    ч.вперед(75)         # вперед 75
-
-    конец()
-
-def test() :
-    начало()
-
-    вперед(75)         # вперед 75
-    лево(90)            # поворот налево на 90 градусов
-    цветПера('синий')    # рисовать линии синим цветом
-    вперед(75)         # вперед 75  
-
-    конец()
     
 if __name__ == '__main__':
-    # test_oop()
-    test()
-    # print("This file is not intended to be run as __main__.");
-    # exit(-1);
+    начало()
+    вперед(75)
+    конец()
