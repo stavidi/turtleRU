@@ -7,6 +7,11 @@ import math
 TIC = 3 # small pause in sec
 TAC = 5 # big pause in sec
 
+EPS = 0.00001
+
+def almost_equal(a, b):
+    return abs(a-b) < EPS
+
 def test_oop() :
     ч = Черепаха()   # сделали черепаху, назвали черепаху t
     # ч.вид("черепаха")     # как черепаха выглядит
@@ -145,7 +150,7 @@ def test_degrees_radians() :
     assert 90 == курс()
     
     вРадианы()
-    assert math.abs(курс() - math.pi/2) < 0.0001
+    assert almost_equal(курс(), math.pi/2)
     
 def test_pen() :
     стереть()
@@ -178,17 +183,98 @@ def test_pen() :
     будемКрасить()
     sq(100)
     заКрасили()
+
+def test_figures():
+    стереть()
     
+    цветПоля("желтый")
+    assert "желтый" == цветПоля()
+    
+    цветПера("синий")
+    круг(50)
+    цветПера("красный")
+    круг(120, 180)
+    print(где())
+    x, y = где()
+    assert almost_equal(0, x)
+    assert almost_equal(240, y)
+    assert 180 == куда()
+    
+    точка(20, "синий")
+    жди(TIC)
+
+def test_stamp(): 
+    стереть()
+    
+    цвет("синий", "красный")
+    
+    пиши("Start")
+    встатьНа(0, 50)
+    
+    пиши("шлеп")
+    я = шлеп()
+    вперед(50)
+    print(я)
+    жди(TIC)
+    
+    убрать_шлеп(я)
+    пиши("убрать шлеп", font=("Arial", 10, "normal"))
+    жди(TIC)
+    
+    вперед(50)
+    шлеп()
+    пиши("шлеп")
+    вперед(50)
+    шлеп()
+    пиши("шлеп")
+    вперед(50)
+    жди(TIC)
+
+    убрать_все_шлепы()
+    пиши("убрать ВСЕ шлепы")
+    жди(TIC)
+    
+def test_undo():
+    стереть()
+    
+    скорость(1)
+    assert 1 == скорость()
+    
+    for x in range(4):
+        вперед(100)
+        лево(90)
+        
+    for x in range(8):
+        верни()
+        
+def test_poly():
+    стереть()
+    цветПоля("белый")
+    цвет("красный", "желтый")
+    многоугольникНачало()
+    for x in range(4):
+        вперед(10)
+        лево(90)
+    многоугольникКонец()
+    м = многоугольник()
+    кв = turtle.addshape("sq", м)
+    t.shape("sq")
+    скорость(1)
+    вперед(100)
     
 def test() :
     начало()
     
-    # test0()
-    # test_color()  
-    # test_visibility()
-    # test_xy()
-    # test_head()
+    test0()
+    test_color()  
+    test_visibility()
+    test_xy()
+    test_head()
     test_pen()
+    test_figures()
+    test_stamp()
+    test_undo()
+    test_poly()
 
     конец()
     

@@ -16,6 +16,10 @@ RU_COLOR = {
   "рыжий": "orange"
 }
 
+EN_COLOR = {}
+for ru in RU_COLOR:
+  EN_COLOR[RU_COLOR[ru]] = ru
+
 screen = turtle.Screen()
 
 # animation control
@@ -29,38 +33,55 @@ def стереть(**kwargs):
 def всеУбрать(**kwargs):
     screen.reset(**kwargs)  
     
+def цветПоля(*colors):
+    q = list(RU_COLOR.get(c, c) for c in colors )
+    print("EN color="+str(q))
+    c = screen.bgcolor(*q)
+    print("bgcolor="+str(c))
+    return EN_COLOR.get(c, c)
+    
 class Черепаха (turtle.Turtle) :
     def __init__(self,**kwargs):
        super(Черепаха, self).__init__(**kwargs)
         
+    def пиши(self, arg, **kwargs):
+        self.write(arg, **kwargs)
+        
+    def верни(self):
+        self.undo()
+        
+    def скорость(self, speed=None):
+        return self.speed(speed)
+        
     # Color control
+   
     def цвет(self, *colors) :
-        return t.color(*list(RU_COLOR.get(c, c) for c in colors ))
+        return self.color(*list(RU_COLOR.get(c, c) for c in colors ))
         
     def цветПера(self, *colors) :
-        return t.pencolor(*list(RU_COLOR.get(c, c) for c in colors ))
+        return self.pencolor(*list(RU_COLOR.get(c, c) for c in colors ))
         
     def цветЗакраски(self, *colors) :
-        return t.fillcolor(*list(RU_COLOR.get(c, c) for c in colors ))
+        return self.fillcolor(*list(RU_COLOR.get(c, c) for c in colors ))
         
     def будемКрасить(self):
-        t.begin_fill()
+        self.begin_fill()
         
     def заКрасили(self):
-        t.end_fill()
+        self.end_fill()
         
     def красить(self):
-        return t.filling()
+        return self.filling()
         
     # Visibility
     def покажись(self):
-        t.showturtle()
+        self.showturtle()
         
     def спрячь(self):
-        t.hideturtle()
+        self.hideturtle()
         
     def видно(self):
-        return t.isvisible()
+        return self.isvisible()
         
     # Motion    
     def вперед(self, n) :
@@ -140,6 +161,31 @@ class Черепаха (turtle.Turtle) :
     def перо(self, pen=None, **pendict) :
         return self.pen(pen, **pendict)
         
+    # Shapes
+    def круг(self, radius, extent = None, steps = None):
+        return self.circle(radius, extent, steps)
+        
+    def точка(self, size=None, *colors):
+        self.dot(size, *list(RU_COLOR.get(c, c) for c in colors ))
+        
+    def шлеп(self):
+        return self.stamp()
+        
+    def убрать_шлеп(self, id):
+        self.clearstamp(id)
+    
+    def убрать_все_шлепы(self):
+        self.clearstamps()
+        
+    def многоугольникНачало(self):
+        self.begin_poly()
+
+    def многоугольникКонец(self):
+        self.end_poly()
+
+    def многоугольник(self):
+        return self.get_poly()
+        
 t = Черепаха()
 
 def начало(**kwargs) :
@@ -148,6 +194,10 @@ def начало(**kwargs) :
 def конец() :
     turtle.mainloop()     # чтобы окно не закрывалось, на repl.it не нужно
 
+пиши = t.пиши
+верни = t.верни
+скорость = t.скорость
+    
 цвет = t.цвет
 цветПера = t.цветПера
 цветЗакраски = t.цветЗакраски
@@ -189,6 +239,15 @@ def конец() :
 толщина = t.толщина
 перо = t.перо
 
+круг = t.круг
+точка = t.точка
+шлеп = t.шлеп
+убрать_шлеп = t.убрать_шлеп
+убрать_все_шлепы = t.убрать_все_шлепы
+
+многоугольникНачало = t.многоугольникНачало
+многоугольникКонец = t.многоугольникКонец
+многоугольник = t.многоугольник
 
 if __name__ == '__main__':
     начало()
